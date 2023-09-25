@@ -51,3 +51,56 @@ design.addEventListener("change", (e) => {
     
 });
 
+/**
+ * Activities: "Total: $" paragraph below the "Register for Activities"
+ * section should update to reflect the total cost of all the selected
+ * activities
+ */
+const activities = document.querySelector("#activities");
+const activitiesTotal = document.querySelector("#activities-cost");
+let total = 0;
+
+activities.addEventListener("change", e => {
+    const dataCost = +e.target.getAttribute(["data-cost"]);
+    
+    if (e.target.checked === true) {
+        total += dataCost;
+    } else {
+        total -= dataCost;
+    }
+    activitiesTotal.innerHTML = `Total: $${total}`;
+})
+
+/**
+ * Payment Info: Credit card payment option should be selected by default.
+ * When user selects a diff payment option, the form should update to display
+ * only the chosen payment method section.
+ */
+const paymentMethod = document.querySelector("#payment");
+const creditCard = document.querySelector("#credit-card");
+const paypal = document.querySelector("#paypal");
+const bitcoin = document.querySelector("#bitcoin");
+
+
+
+paypal.hidden = "true";
+bitcoin.hidden = "true";
+paymentMethod.children[1].setAttribute("selected", true);
+
+paymentMethod.addEventListener("change", e => {
+    const value = e.target.value;
+    if (value === "paypal") {
+        paypal.hidden = false;
+        creditCard.hidden = true;
+        bitcoin.hidden = true; 
+    } else if (value === "bitcoin") {
+        bitcoin.hidden = false; 
+        paypal.hidden = true;
+        creditCard.hidden = true;
+    } else if (value === "credit-card") {
+        creditCard.hidden = false;
+        bitcoin.hidden = true; 
+        paypal.hidden = true;
+        
+    }
+})
