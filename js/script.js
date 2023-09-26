@@ -4,9 +4,10 @@
  */
 const otherJobRole = document.querySelector("#other-job-role");
 const jobRole = document.querySelector("#title");
+const userName = document.querySelector("#name");
 
 window.onload = function() {
-    document.querySelector("#name").focus();
+    userName.focus();
     otherJobRole.style.display = "none";
 }
 
@@ -104,3 +105,49 @@ paymentMethod.addEventListener("change", e => {
         
     }
 })
+
+/**
+ * Form validation: Users shouldn't be able to submit a form without the 
+ * required information, or invalid information.
+ */
+const form = document.querySelector("form");
+const email = document.querySelector("#email");
+const ccNumber = document.querySelector("#cc-num");
+const zip = document.querySelector("#zip");
+const cvv = document.querySelector("#cvv");
+
+// helper functions to validate user inputs
+const isValidName = () => /^[\S\s]+[\S]+$/i.test(userName.value);
+const isValidEmail = () => /^[^@]+@[^@.]+\.[a-z]+$/i.test(email.value);
+const isValidCardNum = () => /^\d{13,16}$/i.test(ccNumber.value);
+const isValidZip = () => /^\d{5}$/i.test(zip.value);
+const isValidCVV = () => /^\d{3}$/i.test(cvv.value);
+
+form.addEventListener("submit", (e) => {
+    const validator = (inputElement, validationFunction) => {
+        if (!validationFunction()) {
+            e.preventDefault();
+            inputElement.closest("label").classList.add("error-border", "not-valid");
+            inputElement.nextElementSibling.style.display = "block";
+            
+        }
+    };
+    validator(userName, isValidName);
+    validator(email, isValidEmail);
+    validator(ccNumber, isValidCardNum);
+    validator(zip, isValidZip);
+    validator(cvv, isValidCVV);
+});
+
+// Accessibility: Form input validation error indications for checkboxes
+const checkboxes = document.querySelectorAll("input[type='checkbox']");
+
+for (let i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].addEventListener("focus", () => {
+        checkboxes[i].closest("label").classList.add("focus");
+    });
+
+    checkboxes[i].addEventListener("blur", () => {
+        checkboxes[i].closest("label").classList.remove("focus");
+    });
+}
