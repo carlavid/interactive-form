@@ -1,10 +1,15 @@
 /**
- * Name Field: When the page first loads, the first text field 
- * should have the focus state by default to prompt the user.
+ * Treehouse Techdegree:
+ * FSJS Project 3 - Interactive Form
  */
-const otherJobRole = document.querySelector("#other-job-role");
-const jobRole = document.querySelector("#title");
+
+/**
+ * When the page first loads, the name field should have the 
+ * focus state by default & other job role should be hidden
+ */
 const userName = document.querySelector("#name");
+const jobRole = document.querySelector("#title");
+const otherJobRole = document.querySelector("#other-job-role");
 
 window.onload = function() {
     userName.focus();
@@ -13,8 +18,7 @@ window.onload = function() {
 
 /**
  * Job Role: If user selects "other", they can enter info into 
- * "other job role" text field. The field should be hidden by default
- * and only be displayed if "other is selected"
+ * "other job role" text field. Otherwise, it will remain hidden.
  */
 jobRole.addEventListener("change", (e) => {
     if (e.target.value === "other") {
@@ -82,8 +86,6 @@ const creditCard = document.querySelector("#credit-card");
 const paypal = document.querySelector("#paypal");
 const bitcoin = document.querySelector("#bitcoin");
 
-
-
 paypal.hidden = "true";
 bitcoin.hidden = "true";
 paymentMethod.children[1].setAttribute("selected", true);
@@ -122,14 +124,19 @@ const isValidEmail = () => /^[^@]+@[^@.]+\.[a-z]+$/i.test(email.value);
 const isValidCardNum = () => /^\d{13,16}$/i.test(ccNumber.value);
 const isValidZip = () => /^\d{5}$/i.test(zip.value);
 const isValidCVV = () => /^\d{3}$/i.test(cvv.value);
+const isValidTotal = () => {return total > 0};
 
 form.addEventListener("submit", (e) => {
     const validator = (inputElement, validationFunction) => {
         if (!validationFunction()) {
             e.preventDefault();
-            inputElement.closest("label").classList.add("error-border", "not-valid");
-            inputElement.nextElementSibling.style.display = "block";
-            
+            inputElement.parentElement.classList.add("error-border", "not-valid");
+            inputElement.parentElement.classList.remove("valid");
+            inputElement.nextElementSibling.style.display = "block";  
+        } else {
+            inputElement.parentElement.classList.add("valid");
+            inputElement.parentElement.classList.remove("error-border", "not-valid");
+            inputElement.nextElementSibling.style.display = "none";  
         }
     };
     validator(userName, isValidName);
@@ -137,9 +144,10 @@ form.addEventListener("submit", (e) => {
     validator(ccNumber, isValidCardNum);
     validator(zip, isValidZip);
     validator(cvv, isValidCVV);
+    validator(activitiesTotal, isValidTotal);
 });
 
-// Accessibility: Form input validation error indications for checkboxes
+// Accessibility: Add visible focus states to checkboxes
 const checkboxes = document.querySelectorAll("input[type='checkbox']");
 
 for (let i = 0; i < checkboxes.length; i++) {
@@ -150,4 +158,4 @@ for (let i = 0; i < checkboxes.length; i++) {
     checkboxes[i].addEventListener("blur", () => {
         checkboxes[i].closest("label").classList.remove("focus");
     });
-}
+};
