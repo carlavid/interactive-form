@@ -3,6 +3,7 @@
  * FSJS Project 3 - Interactive Form
  */
 
+
 /**
  * When the page first loads, the name field should have the 
  * focus state by default & other job role should be hidden
@@ -16,9 +17,10 @@ window.onload = function() {
     otherJobRole.style.display = "none";
 }
 
+
 /**
- * Job Role: If user selects "other", they can enter info into 
- * "other job role" text field. Otherwise, it will remain hidden.
+ * Event listener to handle Job Role section. If user selects "other",
+ * "other job role" text field will display. Otherwise it will remain hidden. 
  */
 jobRole.addEventListener("change", (e) => {
     if (e.target.value === "other") {
@@ -28,9 +30,10 @@ jobRole.addEventListener("change", (e) => {
     }
 })
 
+
 /**
- * T-Shirt: User shouldn't be able to see or choose a color option until 
- * they have chosen a design
+ * Event listener to handle T-Shirt section. User won't be able to see or choose 
+ * a color option until they have chosen a design
  */
 const design = document.querySelector("#design");
 const color = document.querySelector("#color");
@@ -56,10 +59,10 @@ design.addEventListener("change", (e) => {
     
 });
 
+
 /**
- * Activities: "Total: $" paragraph below the "Register for Activities"
- * section should update to reflect the total cost of all the selected
- * activities
+ * Event listener to handle Activities section. Based on selected activities,
+ * "Total: $" paragraph section will update to reflect the total cost 
  */
 const activities = document.querySelector("#activities");
 const activitiesTotal = document.querySelector("#activities-cost");
@@ -76,10 +79,11 @@ activities.addEventListener("change", e => {
     activitiesTotal.innerHTML = `Total: $${total}`;
 })
 
+
 /**
- * Payment Info: Credit card payment option should be selected by default.
- * When user selects a diff payment option, the form should update to display
- * only the chosen payment method section.
+ * Add event listener to handle Payment Section. Credit card payment option 
+ * should be selected by default. When user selects a diff payment option, the 
+ * form should update to display only the chosen payment method section.
  */
 const paymentMethod = document.querySelector("#payment");
 const creditCard = document.querySelector("#credit-card");
@@ -109,8 +113,8 @@ paymentMethod.addEventListener("change", e => {
 })
 
 /**
- * Form validation: Users shouldn't be able to submit a form without the 
- * required information, or invalid information.
+ * Form validation: Add event listener to handle when form is submitted. Users shouldn't 
+ * be able to submit a form without the required information, or invalid information.
  */
 const form = document.querySelector("form");
 const email = document.querySelector("#email");
@@ -146,6 +150,7 @@ form.addEventListener("submit", (e) => {
     validator(cvv, isValidCVV);
     validator(activitiesTotal, isValidTotal);
 });
+
 
 // Accessibility: Add visible focus states to checkboxes
 const checkboxes = document.querySelectorAll("input[type='checkbox']");
