@@ -15,7 +15,7 @@ const otherJobRole = document.querySelector("#other-job-role");
 window.onload = function() {
     userName.focus();
     otherJobRole.style.display = "none";
-}
+};
 
 
 /**
@@ -28,7 +28,7 @@ jobRole.addEventListener("change", (e) => {
     } else {
         otherJobRole.style.display = "none";
     }
-})
+});
 
 
 /**
@@ -77,7 +77,7 @@ activities.addEventListener("change", e => {
         total -= dataCost;
     }
     activitiesTotal.innerHTML = `Total: $${total}`;
-})
+});
 
 
 /**
@@ -107,14 +107,13 @@ paymentMethod.addEventListener("change", e => {
     } else if (value === "credit-card") {
         creditCard.hidden = false;
         bitcoin.hidden = true; 
-        paypal.hidden = true;
-        
+        paypal.hidden = true; 
     }
-})
+});
 
 
 /**
- * Form validation: Add event listener to handle when form is submitted. Users shouldn't 
+ * Add event listener to validate data when form is submitted. Users shouldn't 
  * be able to submit a form without the required information, or invalid information.
  */
 const form = document.querySelector("form");
@@ -153,7 +152,7 @@ form.addEventListener("submit", (e) => {
 });
 
 
-// Accessibility: Add visible focus states to checkboxes
+// Add visible focus states to checkboxes
 const checkboxes = document.querySelectorAll("input[type='checkbox']");
 
 for (let i = 0; i < checkboxes.length; i++) {
@@ -189,10 +188,10 @@ activities.addEventListener("change", (e) => {
     }
 });
 
-/**
- * Event listener to handle real time error messages for card Number section
- */
 
+/**
+ * Event listener to display real time error messages for card Number section.
+ */
 ccNumber.addEventListener("keyup", () => {
     if (!isValidCardNum()) {
         ccNumber.parentElement.classList.add("error-border", "not-valid");
@@ -213,4 +212,4 @@ ccNumber.addEventListener("keyup", () => {
         ccNumber.parentElement.classList.remove("error-border", "not-valid");
         ccNumber.nextElementSibling.style.display = "none";   
     }
-})
+});
