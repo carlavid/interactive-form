@@ -38,7 +38,6 @@ jobRole.addEventListener("change", (e) => {
 const design = document.querySelector("#design");
 const color = document.querySelector("#color");
 const colorOptions = color.children;
-
 color.disabled = true;
 
 design.addEventListener("change", (e) => {
@@ -66,8 +65,8 @@ design.addEventListener("change", (e) => {
  */
 const activities = document.querySelector("#activities");
 const activitiesTotal = document.querySelector("#activities-cost");
-let total = 0;
 
+let total = 0;
 activities.addEventListener("change", e => {
     const dataCost = +e.target.getAttribute(["data-cost"]);
     
@@ -122,13 +121,14 @@ const ccNumber = document.querySelector("#cc-num");
 const zip = document.querySelector("#zip");
 const cvv = document.querySelector("#cvv");
 
-// helper functions to validate user inputs
+// helper functions to validate user inputs & payment method selection
 const isValidName = () => /^[\S\s]+[\S]+$/i.test(userName.value);
 const isValidEmail = () => /^[^@]+@[^@.]+\.[a-z]+$/i.test(email.value);
 const isValidCardNum = () => /^\d{13,16}$/i.test(ccNumber.value);
 const isValidZip = () => /^\d{5}$/i.test(zip.value);
 const isValidCVV = () => /^\d{3}$/i.test(cvv.value);
 const isValidTotal = () => {return total > 0};
+const isCreditCardSelected = () => {return paymentMethod.value == "credit-card"};
 
 form.addEventListener("submit", (e) => {
     const validator = (inputElement, validationFunction) => {
@@ -145,10 +145,12 @@ form.addEventListener("submit", (e) => {
     };
     validator(userName, isValidName);
     validator(email, isValidEmail);
-    validator(ccNumber, isValidCardNum);
-    validator(zip, isValidZip);
-    validator(cvv, isValidCVV);
     validator(activitiesTotal, isValidTotal);
+    if (isCreditCardSelected()) {
+        validator(ccNumber, isValidCardNum);
+        validator(zip, isValidZip);
+        validator(cvv, isValidCVV);
+    } 
 });
 
 
