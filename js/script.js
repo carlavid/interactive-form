@@ -112,6 +112,7 @@ paymentMethod.addEventListener("change", e => {
     }
 })
 
+
 /**
  * Form validation: Add event listener to handle when form is submitted. Users shouldn't 
  * be able to submit a form without the required information, or invalid information.
@@ -164,3 +165,52 @@ for (let i = 0; i < checkboxes.length; i++) {
         checkboxes[i].closest("label").classList.remove("focus");
     });
 };
+
+
+/**
+ * Event listener to handle conflicting activity times. If selected activity has 
+ * the same day and time as another activity. conflicting activity's checkbox 
+ * will be disabled. 
+ */ 
+activities.addEventListener("change", (e) => {
+    selectedDayAndTime = e.target.getAttribute("data-day-and-time");
+
+    for (let i = 1; i < checkboxes.length; i++) {
+        const dayAndTime = checkboxes[i].getAttribute("data-day-and-time");
+        if (e.target.checked && selectedDayAndTime === dayAndTime) {
+            checkboxes[i].parentElement.classList.add("disabled");
+            checkboxes[i].disabled = true;
+            e.target.disabled = false;
+            e.target.parentElement.classList.remove("disabled");
+        } else if (!e.target.checked && selectedDayAndTime === dayAndTime) {
+            checkboxes[i].parentElement.classList.remove("disabled");
+            checkboxes[i].disabled = false;
+        }
+    }
+});
+
+/**
+ * Event listener to handle real time error messages for card Number section
+ */
+
+ccNumber.addEventListener("keyup", () => {
+    if (!isValidCardNum()) {
+        ccNumber.parentElement.classList.add("error-border", "not-valid");
+        ccNumber.parentElement.classList.remove("valid");   
+        if (ccNumber.value.length == 0) {
+            ccNumber.nextElementSibling.textContent = "Credit card number cannot be blank";
+            ccNumber.nextElementSibling.style.display = "block"; 
+        } else if (ccNumber.value.length <= 12) {
+            ccNumber.nextElementSibling.textContent = "Credit card number must be at least 13 digits";
+            ccNumber.nextElementSibling.style.display = "block";
+        }  else if (ccNumber.value.length > 16) {
+            ccNumber.nextElementSibling.textContent = "Credit card number cannot be over 16 digits";
+            ccNumber.nextElementSibling.style.display = "block";
+        }
+    
+    } else if (isValidEmail) {
+        ccNumber.parentElement.classList.add("valid");
+        ccNumber.parentElement.classList.remove("error-border", "not-valid");
+        ccNumber.nextElementSibling.style.display = "none";   
+    }
+})
