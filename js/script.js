@@ -209,7 +209,7 @@ ccNumber.addEventListener("keyup", () => {
             ccNumber.nextElementSibling.style.display = "block";
         }
     
-    } else if (!isValidCardNum()) {
+    } else if (isValidCardNum()) {
         ccNumber.parentElement.classList.add("valid");
         ccNumber.parentElement.classList.remove("error-border", "not-valid");
         ccNumber.nextElementSibling.style.display = "none";   
